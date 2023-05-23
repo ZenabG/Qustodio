@@ -37,9 +37,8 @@ class DeviceSettingsPage:
         self.click_allow_button()
 
     def accept_device_alert(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.alert_is_present())
-        return self.driver.find_element(*self.device_alert_ok).click()
+        if WebDriverWait(self.driver, 10).until(EC.alert_is_present()):
+            return self.driver.find_element(*self.device_alert_ok).click()
 
     def is_qustodio_protection_enabled(self):
         if self.driver.find_element(*self.qustodio_protection_completed).get_attribute("text") == "Finish":
@@ -100,7 +99,7 @@ class DeviceSettingsPage:
         self.click_allow_button()
         self.accept_device_alert()
         self.driver.find_element(*self.allow_device_location_access_while_using_app).click()
-        # self.accept_device_alert()
+        self.driver.find_element(*self.allow_permissions_button).click()
         self.driver.find_element(*self.allow_permissions_button).click()
 
     def activate_device_admin(self):
